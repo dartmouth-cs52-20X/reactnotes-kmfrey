@@ -1,14 +1,86 @@
 body, html {
-    font-family: "Roboto", sans-serif;
-    background-image: radial-gradient(rgb(255, 114, 48), rgb(11, 94, 135));
+    font-family: 'Spectral', serif;
+    background-color: rgb(234, 234, 234);
     height: 100%;
-    color: white;
+    color: rgb(21, 49, 49);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.logo {
-    background-image: url("img/logo.jpg");
-    width: 100px;
-    height: 100px;
-    background-repeat: no-repeat;
-    background-size: contain;
+#add-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.note {
+    margin: 0.2rem;
+    background-color: rgb(171, 177, 169);
+    overflow: scroll;
+    min-width: 15%;
+    max-width: 30%;
+    border: 0.2rem solid rgb(135, 61, 72);
+    position: absolute;
+    .title-bar {
+        margin: 0.25rem;
+        padding: 0.4rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 1.5rem;
+        .alterations {
+            justify-self: end;
+            display: flex;
+            padding: 0.2rem;
+            .fas {
+                margin:0.2rem;
+                font-size: 1.2rem;
+            }
+            .fa-arrows-alt {
+                cursor: pointer;
+            }
+        }
+    }
+    .content {
+        margin: 0.25rem;
+        padding: 0.3rem;
+        border: 0.1rem solid rgb(224, 122, 95);
+        font-size: 1.3rem;
+    }
+}
+
+.edit-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgba(224, 122, 95, 0.7);
+    padding: 2rem;
+    z-index: 1000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+
+    .fas {
+        justify-self: end;
+        align-self: end;
+        font-size: 2rem;
+    }
+    input {
+        width: 30%;
+        padding: 0.4rem;
+        margin: 0.5rem;
+        font-size: 1.5rem;
+    }
+    textarea {
+        width: 100%;
+        padding: 0.4rem;
+        margin: 0.5rem;
+        font-size: 1.3rem;
+    }
 }
