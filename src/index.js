@@ -5,44 +5,48 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import AddBar from './components/add_bar';
 import NotePage from './components/note_page';
+import * as db from './services/datastore';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       notes: Map(),
-      key: 0,
     };
   }
 
+  componentDidMount() {
+    db.fetchNotes((notes) => {
+      const newNotes = Map(notes).map((value) => Map(value));
+      this.setState({ notes: newNotes });
+    });
+  }
+
   addNote = (title) => {
-    const { key } = this.state;
-    const position = Map({ x: 0, y: 0, z: 0 });
-    const value = Map({ title, content: '', position });
-    this.setState((prevState) => ({
-      notes: prevState.notes.set(key, value),
-      key: prevState.key + 1,
-    }));
+    db.addNote(title);
   }
 
   deleteNote = (id) => {
-    this.setState((prevState) => ({
-      notes: prevState.notes.delete(id),
-    }));
+    db.deleteNote(id);
+    // this.setState((prevState) => ({
+    //   notes: prevState.notes.delete(id),
+    // }));
   }
 
   moveNote = (id, position) => {
-    this.setState((prevState) => ({
-      notes: prevState.notes.setIn([id, 'position'], position),
-    }));
+    db.updateNotePostion(id, position);
+    // this.setState((prevState) => ({
+    //   notes: prevState.notes.setIn([id, 'position'], position),
+    // }));
   }
 
   alterNote = (id, title, content) => {
-    const position = this.state.notes.getIn([id, 'position']);
-    const newMap = Map({ title, content, position });
-    this.setState((prevState) => ({
-      notes: prevState.notes.set(id, newMap),
-    }));
+    db.updateNoteContent(id, title, content);
+    // const position = this.state.notes.getIn([id, 'position']);
+    // const newMap = Map({ title, content, position });
+    // this.setState((prevState) => ({
+    //   notes: prevState.notes.set(id, newMap),
+    // }));
   }
 
   render() {

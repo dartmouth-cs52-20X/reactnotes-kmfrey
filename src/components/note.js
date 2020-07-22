@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
-import { Map } from 'immutable';
 import marked from 'marked';
 import EditNote from './edit_note';
 
@@ -19,8 +18,7 @@ class Note extends Component {
 
   onDrag = (e, data) => {
     const position = this.props.notePosition;
-    // eslint-disable-next-line new-cap
-    const newPosition = Map({ x: position.get('x') + data.deltaX, y: position.get('y') + data.deltaY, z: position.get('z') });
+    const newPosition = { x: position.x + data.deltaX, y: position.y + data.deltaY, z: position.z };
     this.props.onMoveNote(this.props.id, newPosition);
   }
 
@@ -53,7 +51,7 @@ class Note extends Component {
       <div className="note-body">
         <Draggable
           handle=".fa-arrows-alt"
-          defaultPosition={{ x: 0, y: 0 }}
+          defaultPosition={{ x: this.props.notePosition.x, y: this.props.notePosition.y }}
           onDrag={this.onDrag}
           grid={[10, 10]}
           bounds="body"
