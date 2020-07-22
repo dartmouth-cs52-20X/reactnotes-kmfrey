@@ -51,7 +51,8 @@ class Note extends Component {
       <div className="note-body">
         <Draggable
           handle=".fa-arrows-alt"
-          defaultPosition={{ x: this.props.notePosition.x, y: this.props.notePosition.y }}
+          defaultPosition={{ x: 10, y: 10 }}
+          position={{ x: this.props.notePosition.x, y: this.props.notePosition.y }}
           onDrag={this.onDrag}
           grid={[10, 10]}
           bounds="body"
