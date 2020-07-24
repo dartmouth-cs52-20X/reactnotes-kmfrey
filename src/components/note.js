@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import marked from 'marked';
+import { Resizable } from 'react-resizable';
 import EditNote from './edit_note';
 
 class Note extends Component {
@@ -28,9 +29,13 @@ class Note extends Component {
     }));
   }
 
-  saveEdit =(title, content) => {
+  saveEdit = (title, content) => {
     this.props.onAlter(this.props.id, title, content);
     this.toShowModal();
+  }
+
+  onResize = (e, { element, size, handle }) => {
+    this.props.onResize(this.props.id, size);
   }
 
   makeModal() {
@@ -57,20 +62,28 @@ class Note extends Component {
           grid={[10, 10]}
           bounds="body"
         >
-          <div className="note">
-            <div className="title-bar">
-              <div className="title"> {this.props.noteTitle} </div>
-              <div className="alterations">
-                <i onClick={this.onDelete} className="fas fa-trash" />
-                <i onClick={this.toShowModal} className="fas fa-edit" />
-                <i className="fas fa-arrows-alt" />
+          <Resizable
+            width={this.props.noteSize.width}
+            height={this.props.noteSize.height}
+            minConstraints={[170, 100]}
+            maxConstraints={[400, 400]}
+            resizeHandles={['se']}
+            onResize={this.onResize}
+          >
+            <div className="note" style={{ width: `${this.props.noteSize.width}px`, height: `${this.props.noteSize.height}px` }}>
+              <div className="title-bar">
+                <div className="title"> {this.props.noteTitle} </div>
+                <div className="alterations">
+                  <i onClick={this.onDelete} className="fas fa-trash" />
+                  <i onClick={this.toShowModal} className="fas fa-edit" />
+                  <i className="fas fa-arrows-alt" />
+                </div>
               </div>
+              { /* eslint-disable-next-line react/no-danger */ }
+              <div className="content" dangerouslySetInnerHTML={{ __html: marked(this.props.noteContent) }} />
             </div>
-            { /* eslint-disable-next-line react/no-danger */ }
-            <div className="content" dangerouslySetInnerHTML={{ __html: marked(this.props.noteContent) }} />
-          </div>
+          </Resizable>
         </Draggable>
-
         {this.makeModal()}
       </div>
     );

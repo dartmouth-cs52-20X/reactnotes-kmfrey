@@ -28,10 +28,9 @@ export function addNote(title) {
     title,
     content: '',
     position: { x: 0, y: 0, z: 0 },
+    size: { width: 200, height: 200 },
   };
-  const newNoteKey = firebase.database().ref('notes').push(noteData);
-  // ????
-  return newNoteKey;
+  firebase.database().ref('notes').push(noteData);
 }
 
 export function deleteNote(id) {
@@ -49,4 +48,9 @@ export function updateNoteContent(id, title, content) {
 
 export function updateNotePostion(id, position) {
   firebase.database().ref('notes').child(id).update({ position });
+}
+
+// for resizing!
+export function updateNoteSize(id, size) {
+  firebase.database().ref('notes').child(id).update({ size });
 }

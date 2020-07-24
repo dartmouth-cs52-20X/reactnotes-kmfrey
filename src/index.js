@@ -28,32 +28,25 @@ class App extends Component {
 
   deleteNote = (id) => {
     db.deleteNote(id);
-    // this.setState((prevState) => ({
-    //   notes: prevState.notes.delete(id),
-    // }));
   }
 
   moveNote = (id, position) => {
     db.updateNotePostion(id, position);
-    // this.setState((prevState) => ({
-    //   notes: prevState.notes.setIn([id, 'position'], position),
-    // }));
   }
 
   alterNote = (id, title, content) => {
     db.updateNoteContent(id, title, content);
-    // const position = this.state.notes.getIn([id, 'position']);
-    // const newMap = Map({ title, content, position });
-    // this.setState((prevState) => ({
-    //   notes: prevState.notes.set(id, newMap),
-    // }));
+  }
+
+  resizeNote = (id, size) => {
+    db.updateNoteSize(id, size);
   }
 
   render() {
     return (
       <div>
         <AddBar onNoteAdd={this.addNote} />
-        <NotePage noteMap={this.state.notes} onDeleteNote={this.deleteNote} onMoveNote={this.moveNote} onAlterNote={this.alterNote} />
+        <NotePage noteMap={this.state.notes} onDeleteNote={this.deleteNote} onMoveNote={this.moveNote} onAlterNote={this.alterNote} onResizeNote={this.resizeNote} />
       </div>
     );
   }
